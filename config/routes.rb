@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   devise_for :users, skip: :all
+  post 'login', to: 'sessions#create'
   post 'register', to: 'users#create_owner'
+  post 'employees', to: 'users#create_employee'
 
 end
