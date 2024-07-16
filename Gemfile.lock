@@ -142,6 +142,7 @@ GEM
     nokogiri (1.16.6-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    pg (1.5.6)
     psych (5.1.2)
       stringio
     puma (6.4.2)
@@ -225,6 +226,7 @@ DEPENDENCIES
   debug
   devise
   jwt
+  pg
   puma (>= 5.0)
   rails (~> 7.1.3, >= 7.1.3.2)
   sqlite3 (~> 1.4)
