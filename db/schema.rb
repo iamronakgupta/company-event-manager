@@ -10,12 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_16_151457) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_17_194216) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.date "start_date"
+    t.time "start_time"
+    t.time "end_time"
+    t.date "ends_on"
+    t.string "repeat_days"
+    t.boolean "recurrence", null: false
+    t.integer "recurrence_week"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
