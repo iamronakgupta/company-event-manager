@@ -13,11 +13,11 @@ class EventsController < ApplicationController
   def assign_employees
     employees = @current_user.company.users.where(email: params[:employee_emails])
     emails_added = employees.pluck(:email)
-    if @event.employees << employees
-      render json: {"emails added": emails_added , "email not found": params[:employee_emails]-emails_added}, status: :ok
-    else
-      render json: { errors: "Error assigning employees" }, status: :unprocessable_entity
-    end
+
+    @event.employees << employees
+    render json: {"emails added": emails_added , "email not found": params[:employee_emails]-emails_added}, status: :ok
+  rescue
+    render json: { errors: "Error assigning employees" }, status: :unprocessable_entity
   end
 
   def update_recurrences
