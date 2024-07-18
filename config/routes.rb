@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :events, only: [:index, :create] do
     member do
       post 'assign_employees'
+      post 'update_recurrences'
     end
   end
   devise_for :users, skip: :all
