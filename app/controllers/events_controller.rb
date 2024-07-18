@@ -2,7 +2,8 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:assign_employees, :update_recurrences]
   def create
     event = Event.new(event_params)
-    if @current_user.events << event
+    if event.save
+      @current_user.events << event
       render json: event, status: :created
     else
       render json: event.errors, status: :unprocessable_entity
@@ -36,7 +37,7 @@ class EventsController < ApplicationController
   def set_event
     @event = @current_user.events.find(params[:id] )
   rescue ActiveRecord::RecordNotFound => e
-    render json: { errors: "You are not authorised to edit this event" }, status: :unprocessable_entity
+    render json: { errors: "You are not authorised to this event" }, status: :unprocessable_entity
   end
 
 
