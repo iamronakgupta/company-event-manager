@@ -4,8 +4,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  # Associations
   belongs_to :company, optional: true
+  has_and_belongs_to_many :events
+
+  # enums
   enum role: { owner: 'owner', employee: 'employee' }
 
+  # Validations
   validates :role, inclusion: { in: roles.keys }
 end
