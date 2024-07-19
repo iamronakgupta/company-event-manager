@@ -1,13 +1,14 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:assign_employees, :update_recurrences]
+  before_action :require_dates, only: [:index]
 
   def index
     start_date = params[:start_date]
     end_date = params[:end_date]
     events = @current_user.company.events.flat_map do | event |
-        json = event.as_json
-        json[:events_dates] = event.get_dates_between(start_date, end_date) if event.recurrence
-        json
+      json = event.as_json
+      json[:events_dates] = event.get_dates_between(start_date, end_date) if event.recurrence
+      json
     end
     render json: events, status: :ok
   end
@@ -81,5 +82,11 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:name, :description, :start_date, :start_time, :end_time, :recurring, :recurrence,
       :recurrence_week, :ends_on, repeat_days: [])
+  end
+
+  def require_dates
+    unless params[:start_date].present? && params[:end_date].present?
+      render json: { error: 'start_date and end_date are required parameters' }, status: :bad_request
+    end
   end
 end
