@@ -2,6 +2,7 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:assign_employees, :update_recurrences]
   def create
     event = Event.new(event_params)
+    event.company = @current_user.company
     if event.save
       @current_user.events << event
       render json: event, status: :created

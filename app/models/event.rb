@@ -8,6 +8,7 @@ class Event < ApplicationRecord
 
   # Association
   has_and_belongs_to_many :employees, class_name: "User"
+  belongs_to :company
 
 
   def repeat_days_must_be_valid
