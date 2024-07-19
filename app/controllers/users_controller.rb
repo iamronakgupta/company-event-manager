@@ -10,6 +10,8 @@ class UsersController < ApplicationController
     end
   rescue ActiveRecord::RecordInvalid => e
     render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+  rescue ActionController::ParameterMissing => e
+    render json: { errors: e}, status: :unprocessable_entity
   end
 
   def create_employee
@@ -21,6 +23,8 @@ class UsersController < ApplicationController
     end
   rescue ActiveRecord::RecordInvalid => e
     render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+  rescue ActionController::ParameterMissing => e
+    render json: { errors: e}, status: :unprocessable_entity
   end
 
   private
