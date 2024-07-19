@@ -1,5 +1,17 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:assign_employees, :update_recurrences]
+
+  def index
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+    events = @current_user.company.events.flat_map do | event |
+        json = event.as_json
+        json[:events_dates] = event.get_dates_between(start_date, end_date) if event.recurrence
+        json
+    end
+    render json: events, status: :ok
+  end
+
   def create
     event = Event.new(event_params)
     event.company = @current_user.company

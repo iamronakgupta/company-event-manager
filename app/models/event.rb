@@ -17,4 +17,29 @@ class Event < ApplicationRecord
       errors.add(:repeat_days, "must be an array of valid weekdays")
     end
   end
+
+  def get_dates_between(start_date, end_date)
+    days_of_week = repeat_days
+    week_interval = recurrence_week
+    start_date = Date.parse(start_date)
+    end_date = Date.parse(end_date)
+
+    days_of_week = days_of_week.map(&:capitalize)
+
+    result_dates = []
+    current_date = start_date
+
+    while current_date <= end_date
+      if days_of_week.include?(current_date.strftime('%A'))
+        result_dates << current_date
+      end
+
+      current_date += 1
+
+      if current_date.strftime('%A') == 'Sunday' && week_interval > 1
+        current_date += (week_interval - 1) * 7
+      end
+    end
+    result_dates
+  end
 end
