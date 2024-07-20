@@ -52,4 +52,33 @@ RSpec.describe 'events_controller', type: :request do
       end
     end
   end
+
+  path "/assign_employees" do
+    post "Assign employees to events" do
+      tags "Events"
+      consumes "application/json"
+      parameter name: :id, in: :query, type: :string, description: 'event_id where employee will be assigned'
+      parameter name: "employee_ids[]", in: :body, schema: {
+        type: :object,
+        properties: {
+          employee_emails: {
+            type: :array,
+            items: {
+              days: { type: :string }
+            }
+          }
+        }
+      }
+
+      response "201", "employees assigned" do
+        let(:event) { { employee_emails: ["test1@gmail.com", "test2@gmail.com"] } }
+        run_test!
+      end
+
+      response "422", "invalid request" do
+        let(:event) { { employee_emails: [] }  }
+        run_test!
+      end
+    end
+  end
 end

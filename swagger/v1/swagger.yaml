@@ -61,6 +61,33 @@ paths:
                   - recurrence
               required:
               - event
+  "/assign_employees":
+    post:
+      summary: Assign employees to events
+      tags:
+      - Events
+      parameters:
+      - name: id
+        in: query
+        description: event_id where employee will be assigned
+        schema:
+          type: string
+      responses:
+        '201':
+          description: employees assigned
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                employee_emails:
+                  type: array
+                  items:
+                    days:
+                      type: string
   "/login":
     post:
       summary: create session
