@@ -50,8 +50,9 @@ paths:
                       type: time
                     repeat_days:
                       type: array
-                      days:
-                        type: string
+                      items:
+                        days:
+                          type: string
                   required:
                   - name
                   - description
@@ -61,15 +62,16 @@ paths:
                   - recurrence
               required:
               - event
-  "/assign_employees":
+  "/events/{id}/assign_employees":
     post:
       summary: Assign employees to events
       tags:
       - Events
       parameters:
       - name: id
-        in: query
+        in: path
         description: event_id where employee will be assigned
+        required: true
         schema:
           type: string
       responses:

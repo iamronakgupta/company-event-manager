@@ -21,7 +21,9 @@ RSpec.describe 'events_controller', type: :request do
               ends_on: { type: :time },
               repeat_days: {
                 type: :array,
-                days: {type: :string}
+                items: {
+                  days: { type: :string }
+                }
               }
             },
             required: ["name", "description", "start_time", "end_time", "start_date", "recurrence" ]
@@ -53,18 +55,18 @@ RSpec.describe 'events_controller', type: :request do
     end
   end
 
-  path "/assign_employees" do
+  path "/events/{id}/assign_employees" do
     post "Assign employees to events" do
       tags "Events"
       consumes "application/json"
-      parameter name: :id, in: :query, type: :string, description: 'event_id where employee will be assigned'
+      parameter name: :id, in: :path, type: :string, description: 'event_id where employee will be assigned'
       parameter name: "employee_ids[]", in: :body, schema: {
         type: :object,
         properties: {
           employee_emails: {
             type: :array,
             items: {
-              days: { type: :string }
+            days: { type: :string }
             }
           }
         }
