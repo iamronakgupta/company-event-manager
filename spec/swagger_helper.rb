@@ -15,19 +15,31 @@ RSpec.configure do |config|
   # document below. You can override this behavior by adding a openapi_spec tag to the
   # the root example_group in your specs, e.g. describe '...', openapi_spec: 'v2/swagger.json'
   config.openapi_specs = {
-    'v1/swagger.yaml' => {
+    'v1/swagger.json' => {
       openapi: '3.0.1',
       info: {
         title: 'API V1',
         version: 'v1'
       },
+      components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: :http,
+            scheme: :bearer,
+            bearerFormat: :JWT
+          }
+        }
+      },
+      security: [{
+        bearerAuth: []
+      }],
       paths: {},
       servers: [
         {
           url: 'http://{defaultHost}',
           variables: {
             defaultHost: {
-              default: '127.0.0.1:3000'
+              default: 'localhost:3000'
             }
           }
         }
@@ -39,5 +51,5 @@ RSpec.configure do |config|
   # The openapi_specs configuration option has the filename including format in
   # the key, this may want to be changed to avoid putting yaml in json files.
   # Defaults to json. Accepts ':json' and ':yaml'.
-  config.openapi_format = :yaml
+  config.openapi_format = :json
 end
