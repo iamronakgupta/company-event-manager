@@ -5,6 +5,7 @@ class Event < ApplicationRecord
   validates :recurrence, inclusion: { in: [ true, false ] }
   validates :recurrence_week, :repeat_days, presence: true, if: -> {recurrence == true}
   validate :repeat_days_must_be_valid
+  validates :recurrence_week, numericality: { greater_than: 0 }
 
   # Association
   has_and_belongs_to_many :employees, class_name: "User"
