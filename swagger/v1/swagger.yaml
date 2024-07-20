@@ -62,6 +62,26 @@ paths:
                   - recurrence
               required:
               - event
+    get:
+      summary: update recurring event
+      tags:
+      - Events
+      parameters:
+      - name: start_date
+        in: query
+        description: start date of range
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        description: end date of range
+        schema:
+          type: string
+      responses:
+        '200':
+          description: event updated
+        '422':
+          description: invalid request
   "/events/{id}/assign_employees":
     post:
       summary: Assign employees to events

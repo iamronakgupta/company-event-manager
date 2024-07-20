@@ -138,4 +138,34 @@ RSpec.describe 'events_controller', type: :request do
       end
     end
   end
+
+  path "/events" do
+    get "update recurring event" do
+      tags "Events"
+      consumes "application/json"
+      parameter name: :start_date, in: :query, type: :string, description: 'start date of range'
+      parameter name: :end_date, in: :query, type: :string, description: 'end date of range'
+
+      response "200", "event updated" do
+        let(:event) { { update_type: "all",  "event": {
+          "name": "Test Event",
+          "description": "Some des",
+          "start_time": "14:00",
+          "end_time": "16:00",
+          "start_date": "03/04/2017",
+          "recurrence": "true"
+          }} }
+        run_test!
+      end
+
+      response "422", "invalid request" do
+        let(:event) { {  "event": {
+          "name": "Test Event",
+          "description": "Some des",
+          "start_time": "14:00"
+          }} }
+        run_test!
+      end
+    end
+  end
 end
