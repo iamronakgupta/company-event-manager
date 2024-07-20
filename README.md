@@ -1,25 +1,26 @@
-# README
+# Company Event Manager
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+An assignment by Bird Vision AB
+## Installation
 
-Things you may want to cover:
+```bash
+git clone https://github.com/iamronakgupta/company-event-manager.git
+cd company-event_manager
 
-* Ruby version
+bundle install
 
-* System dependencies
+rails db:create
+rails db:migrate
 
-* Configuration
+rails s # to start the server
+```
 
-* Database creation
 
-* Database initialization
+## Access Swager to test API endpoints
 
-* How to run the test suite
+After setting up the project go to
+```bash
+http://localhost:3000/api-docs/index.html
+```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# company-event-manager
+It has all the api endpoints with in this application.
