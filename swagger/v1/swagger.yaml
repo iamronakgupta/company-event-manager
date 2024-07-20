@@ -3,7 +3,64 @@ openapi: 3.0.1
 info:
   title: API V1
   version: v1
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+- bearerAuth: []
 paths:
+  "/events":
+    post:
+      summary: Create a new Event
+      tags:
+      - Events
+      parameters: []
+      responses:
+        '201':
+          description: event created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                event:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    start_date:
+                      type: datetime
+                    start_time:
+                      type: datetime
+                    end_time:
+                      type: datetime
+                    recurrence:
+                      type: boolean
+                    recurrence_week:
+                      type: integer
+                    ends_on:
+                      type: time
+                    repeat_days:
+                      type: array
+                      days:
+                        type: string
+                  required:
+                  - name
+                  - description
+                  - start_time
+                  - end_time
+                  - start_date
+                  - recurrence
+              required:
+              - event
   "/login":
     post:
       summary: create session
@@ -68,12 +125,7 @@ paths:
       summary: add employee to company
       tags:
       - Users
-      parameters:
-      - name: Authorization
-        in: header
-        description: Authorization token
-        schema:
-          type: string
+      parameters: []
       responses:
         '201':
           description: Session created

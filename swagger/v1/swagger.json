@@ -21,6 +21,82 @@
     }
   ],
   "paths": {
+    "/events": {
+      "post": {
+        "summary": "Create a new Event",
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "201": {
+            "description": "event created"
+          },
+          "422": {
+            "description": "invalid request"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "event": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "start_date": {
+                        "type": "date"
+                      },
+                      "end_date": {
+                        "type": "date"
+                      },
+                      "start_time": {
+                        "type": "time"
+                      },
+                      "end_time": {
+                        "type": "time"
+                      },
+                      "recurrence": {
+                        "type": "boolean"
+                      },
+                      "repeat_days": {
+                        "type": "array"
+                      },
+                      "recurrence_week": {
+                        "type": "integer"
+                      },
+                      "ends_on": {
+                        "type": "time"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "description",
+                      "start_time",
+                      "end_time",
+                      "start_date",
+                      "recurrence"
+                    ]
+                  }
+                },
+                "required": [
+                  "event"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
     "/login": {
       "post": {
         "summary": "create session",
