@@ -37,7 +37,6 @@ RSpec.describe "users_controller", type: :request do
     post "add employee to company" do
       tags "Users"
       consumes "application/json"
-      parameter name: :Authorization, in: :header, type: :string, description: 'Authorization token'
       parameter name: :user, in: :body, schema: {
         type: :object,
         properties: {
