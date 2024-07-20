@@ -83,4 +83,59 @@ RSpec.describe 'events_controller', type: :request do
       end
     end
   end
+
+  path "/events/{id}/update_recurrences" do
+    post "update recurring event" do
+      tags "Events"
+      consumes "application/json"
+      parameter name: :id, in: :path, type: :string, description: 'event_id which will be updated'
+      parameter name: :event, in: :body, schema: {
+        type: :object,
+        properties: {
+          update_type: {type: :string },
+          event: {
+            type: :object,
+            properties: {
+              name: { type: :string },
+              description: { type: :string },
+              start_date: { type: :datetime },
+              start_time: { type: :datetime },
+              end_time: { type: :datetime },
+              recurrence: { type: :boolean },
+              recurrence_week: { type: :integer },
+              ends_on: { type: :time },
+              repeat_days: {
+                type: :array,
+                items: {
+                  days: { type: :string }
+                }
+              }
+            },
+          },
+        },
+        required: ["event"],
+      }
+
+      response "201", "event updated" do
+        let(:event) { { update_type: "all",  "event": {
+          "name": "Test Event",
+          "description": "Some des",
+          "start_time": "14:00",
+          "end_time": "16:00",
+          "start_date": "03/04/2017",
+          "recurrence": "true"
+          }} }
+        run_test!
+      end
+
+      response "422", "invalid request" do
+        let(:event) { {  "event": {
+          "name": "Test Event",
+          "description": "Some des",
+          "start_time": "14:00"
+          }} }
+        run_test!
+      end
+    end
+  end
 end

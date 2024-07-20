@@ -90,6 +90,57 @@ paths:
                   items:
                     days:
                       type: string
+  "/events/{id}/update_recurrences":
+    post:
+      summary: update recurring event
+      tags:
+      - Events
+      parameters:
+      - name: id
+        in: path
+        description: event_id which will be updated
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: event updated
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                update_type:
+                  type: string
+                event:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    start_date:
+                      type: datetime
+                    start_time:
+                      type: datetime
+                    end_time:
+                      type: datetime
+                    recurrence:
+                      type: boolean
+                    recurrence_week:
+                      type: integer
+                    ends_on:
+                      type: time
+                    repeat_days:
+                      type: array
+                      items:
+                        days:
+                          type: string
+              required:
+              - event
   "/login":
     post:
       summary: create session
